@@ -26,11 +26,11 @@ public class HelloWorld extends JFrame
 		{
 			Object v1 = graph.insertVertex(parent, null, "Hello", 20, 20, 80,
 					30);
-			Object v2 = graph.insertVertex(v1, null, "World!", 240, 150,
+			Object v2 = graph.insertVertex(parent, null, "World!", 240, 150,
 					80, 30);
-			Object v3 = graph.insertVertex(v1, null, "This", 100, 150,
+			Object v3 = graph.insertVertex(parent, null, "This", 100, 150,
 					80, 30);
-			Object v4 = graph.insertVertex(v2, null, "is", 240, 100,
+			Object v4 = graph.insertVertex(parent, null, "is", 240, 100,
 					80, 30);
 			Object v5 = graph.insertVertex(parent, null, "SPARTA!", 340, 1500,
 					80, 30);

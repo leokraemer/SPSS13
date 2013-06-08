@@ -7,5 +7,12 @@ import com.mxgraph.view.mxGraph;
  *
  */
 public class ISGCIGraph extends mxGraph {
-
+/**
+ * creates a new mxGraph with no loops and multiedges
+ */
+    ISGCIGraph(){
+        super();
+        this.setAllowLoops(false);
+        this.setMultigraph(false);
+    }
 }

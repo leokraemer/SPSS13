@@ -32,6 +32,7 @@ import org.xml.sax.SAXException;
  */
 public class NodeView<V,E> implements View {
     protected GraphView<V,E> parent;
+    //V = Set<GraphClass>
     protected V node;
     protected Point center;
     protected Dimension size;
