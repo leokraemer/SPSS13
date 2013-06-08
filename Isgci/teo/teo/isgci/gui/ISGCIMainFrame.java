@@ -292,7 +292,7 @@ public class ISGCIMainFrame extends JFrame
      * @return the panel
      */
     protected JComponent createCanvasPanel() {
-        graphCanvas = new ISGCIGraphCanvas(this);
+    	graphCanvas = new ISGCIGraphCanvas(this);
         drawingPane = new JScrollPane(graphCanvas,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -420,10 +420,7 @@ public class ISGCIMainFrame extends JFrame
     public void itemStateChanged(ItemEvent event) {
         Object object = event.getSource();
 
-        if (object == miDrawUnproper) {
-            graphCanvas.setDrawUnproper(
-                    ((JCheckBoxMenuItem) object).getState());
-        }
+       
     }
 }
 
