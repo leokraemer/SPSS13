@@ -100,7 +100,6 @@ public class Accordion extends JPanel implements Runnable {
     protected boolean visibilityChanged = false;
     protected boolean contentChanged = false;
 
-    @SuppressWarnings("deprecation")
     public void actualize() {
         if (visibilityChanged) {
             visibilityChanged = false;
@@ -116,7 +115,8 @@ public class Accordion extends JPanel implements Runnable {
         if (contentChanged) {
             if (mainFrame.sidebar.isVisible()) {
                 contentChanged = false;
-                setContent(actualContent);
+                if (actualContent != null)
+                    setContent(actualContent);
             }
         }
 
@@ -666,12 +666,10 @@ public class Accordion extends JPanel implements Runnable {
 
     }
 
-    @SuppressWarnings("deprecation")
     public void visibilityChanged() {
         visibilityChanged = true;
     }
 
-    @SuppressWarnings("deprecation")
     public void changeContent(String NodeID) {
         actualContent = NodeID;
         contentChanged = true;

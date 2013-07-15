@@ -15,7 +15,7 @@ public class CustomGraphComponent extends mxGraphComponent {
      */
     private static final long serialVersionUID = -7478582081513091476L;
 
-    public CustomGraphComponent(mxGraph graph) {
+    public CustomGraphComponent(CustomGraph graph) {
         super(graph);
         graphControl = new CustomGraphControl();
         // register everything that would go to super to the CustomGraphControl

@@ -870,101 +870,6 @@ public class ISGCIGraphCanvas extends CustomGraphComponent implements
         }
     }
 
-    /**
-     * few Methods needed for "Show Information" and other Functionality
-     * 
-     * @param cell
-     * @author philipp, leo
-     * @date 21.06, 30.06.
-     * @annotation now changes teh e
-     */
-
-    public void setSelectedCell(mxCell cell) {
-        graph.setSelectionCell(null);
-        parent.getUndoM().setSignificant(false);
-        graph.getModel().beginUpdate();
-        try {
-            if (lastSelected != null && cell != lastSelected) {
-                graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, "1",
-                        new Object[] { lastSelected });
-            }
-            this.lastSelected = cell;
-            // update the sidebar
-            setSidebarConent();
-            // reset the old selection of edges
-            graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, EDGE_COLOR,
-                    highlitedEdges);
-            graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, "1",
-                    highlitedEdges);
-            setProperness(highlitedEdges);
-
-            // switch the selected edges
-            highlitedEdges = graph.getEdges(cell);
-
-            // color the new edges
-            graph.setCellStyles(mxConstants.STYLE_STROKECOLOR,
-                    ALTERNATE_EDGE_COLOR, highlitedEdges);
-            graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, "3",
-                    highlitedEdges);
-            setProperness(highlitedEdges);
-            // reset the style of the old highlighted nodes
-            graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, CELL_COLOR,
-                    highlitedCells);
-            graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, "1",
-                    highlitedCells);
-
-            // get and switch the associated cells
-            Set<Object> temp = new HashSet<Object>();
-            for (Object edge : graph.getIncomingEdges(cell)) {
-                temp.add(((mxCell)edge).getSource());
-            }
-            for (Object edge : graph.getOutgoingEdges(cell)) {
-                temp.add(((mxCell)edge).getTarget());
-            }
-            highlitedCells = temp.toArray();
-            // highlight the cells of the new highlighted nodes
-            graph.setCellStyles(mxConstants.STYLE_STROKECOLOR,
-                    ALTERNATE_CELL_COLOR, highlitedCells);
-            graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, "3",
-                    highlitedCells);
-
-            // make selected cell back
-            graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, "3",
-                    new Object[] { cell });
-        } finally {
-            graph.getModel().endUpdate();
-            parent.getUndoM().setSignificant(true);
-        }
-    }
-
-    public mxCell getSelectedCell() {
-        return lastSelected;
-
-    }
-
-    public void setSidebarConent() {
-        if (parent.sidebar.isVisible()) {
-            if (getSelectedCell() != null) {
-                if (parent.sidebar.getContent() != ((GraphClassSet)getSelectedCell()
-                        .getValue()).getLabel().getID()) {
-                    parent.sidebar
-                            .changeContent(((GraphClassSet)getSelectedCell()
-                                    .getValue()).getLabel().getID());
-                }
-            } else {
-                parent.sidebar.setDefaultText();
-            }
-        }
-    }
-
-    public void setParent(ISGCIMainFrame parent) {
-        this.parent = parent;
-    }
-
-    public ISGCIMainFrame getParent() {
-        return parent;
-    }
-
     public void mousePressed(MouseEvent event) {
         mousePopup(event);
         start = event.getPoint();
@@ -1102,6 +1007,101 @@ public class ISGCIGraphCanvas extends CustomGraphComponent implements
         } finally {
             graph.getModel().endUpdate();
         }
+    }
+
+    /**
+     * few Methods needed for "Show Information" and other Functionality
+     * 
+     * @param cell
+     * @author philipp, leo
+     * @date 21.06, 30.06.
+     * @annotation now changes teh e
+     */
+
+    public void setSelectedCell(mxCell cell) {
+        graph.setSelectionCell(null);
+        parent.getUndoM().setSignificant(false);
+        graph.getModel().beginUpdate();
+        try {
+            if (lastSelected != null && cell != lastSelected) {
+                graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, "1",
+                        new Object[] { lastSelected });
+            }
+            this.lastSelected = cell;
+            // update the sidebar
+            setSidebarConent();
+            // reset the old selection of edges
+            graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, EDGE_COLOR,
+                    highlitedEdges);
+            graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, "1",
+                    highlitedEdges);
+            setProperness(highlitedEdges);
+
+            // switch the selected edges
+            highlitedEdges = graph.getEdges(cell);
+
+            // color the new edges
+            graph.setCellStyles(mxConstants.STYLE_STROKECOLOR,
+                    ALTERNATE_EDGE_COLOR, highlitedEdges);
+            graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, "3",
+                    highlitedEdges);
+            setProperness(highlitedEdges);
+            // reset the style of the old highlighted nodes
+            graph.setCellStyles(mxConstants.STYLE_STROKECOLOR, CELL_COLOR,
+                    highlitedCells);
+            graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, "1",
+                    highlitedCells);
+
+            // get and switch the associated cells
+            Set<Object> temp = new HashSet<Object>();
+            for (Object edge : graph.getIncomingEdges(cell)) {
+                temp.add(((mxCell)edge).getSource());
+            }
+            for (Object edge : graph.getOutgoingEdges(cell)) {
+                temp.add(((mxCell)edge).getTarget());
+            }
+            highlitedCells = temp.toArray();
+            // highlight the cells of the new highlighted nodes
+            graph.setCellStyles(mxConstants.STYLE_STROKECOLOR,
+                    ALTERNATE_CELL_COLOR, highlitedCells);
+            graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, "3",
+                    highlitedCells);
+
+            // make selected cell back
+            graph.setCellStyles(mxConstants.STYLE_STROKEWIDTH, "3",
+                    new Object[] { cell });
+        } finally {
+            graph.getModel().endUpdate();
+            parent.getUndoM().setSignificant(true);
+        }
+    }
+
+    public mxCell getSelectedCell() {
+        return lastSelected;
+    }
+
+    public void setSidebarConent() {
+        if (parent.sidebar.isVisible()) {
+            if (getSelectedCell() != null) {
+                if (parent.sidebar.getContent() != ((GraphClassSet)getSelectedCell()
+                        .getValue()).getLabel().getID()) {
+                    parent.sidebar
+                            .changeContent(((GraphClassSet)getSelectedCell()
+                                    .getValue()).getLabel().getID());
+                }
+            } else {
+                parent.sidebar.setDefaultText();
+                parent.sidebar.changeContent(null);
+            }
+        }
+    }
+
+    public void setParent(ISGCIMainFrame parent) {
+        this.parent = parent;
+    }
+
+    public ISGCIMainFrame getParent() {
+        return parent;
     }
 
     /**
@@ -1244,7 +1244,6 @@ public class ISGCIGraphCanvas extends CustomGraphComponent implements
                 false)) {
             map.put(((GraphClassSet)((mxCell)cell).getValue()).getSet(), cell);
         }
-        setSidebarConent();
         parent.getUndoM().setSignificant(false);
         graph.getModel().beginUpdate();
         try {

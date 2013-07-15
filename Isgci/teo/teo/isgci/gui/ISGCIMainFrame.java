@@ -555,19 +555,25 @@ public class ISGCIMainFrame extends JFrame implements WindowListener,
             Object tempCell = graphCanvas.getSelectedCell();
             graphCanvas.setSelectedCell(null);
             undoManager.undo();
-            graphCanvas.getGraph().setSelectionCell(null);
+            graphCanvas.setSelectedCell(null);
             graphCanvas.resetGraph();
-            if (graphCanvas.getGraph().getModel().contains(tempCell))
+            if (graphCanvas.getGraph().getModel().contains(tempCell)) {
                 graphCanvas.setSelectedCell((mxCell)tempCell);
+            } else {
+                graphCanvas.setSelectedCell(null);
+            }
         } else if (object == miRedo) {
             // redo change in the drawingPane
             Object tempCell = graphCanvas.getSelectedCell();
             graphCanvas.setSelectedCell(null);
             undoManager.redo();
-            graphCanvas.getGraph().setSelectionCell(null);
+            graphCanvas.setSelectedCell(null);
             graphCanvas.resetGraph();
-            if (graphCanvas.getGraph().getModel().contains(tempCell))
+            if (graphCanvas.getGraph().getModel().contains(tempCell)) {
                 graphCanvas.setSelectedCell((mxCell)tempCell);
+            } else {
+                graphCanvas.setSelectedCell(null);
+            }
         } else if (object == miLayout) {
 
             graphCanvas.animateGraph();
@@ -611,12 +617,11 @@ public class ISGCIMainFrame extends JFrame implements WindowListener,
             open.setVisible(true);
         } else if (object == miShowInformation) {
 
-            if (((mxCell)((mxGraphComponent)drawingPane).getGraph()
-                    .getSelectionCell()).isEdge()) {
-                GraphClassSet edgesource = (GraphClassSet)((mxCell)((mxCell)((mxGraphComponent)graphCanvas)
-                        .getGraph().getSelectionCell()).getSource()).getValue();
-                GraphClassSet edgetarget = (GraphClassSet)((mxCell)((mxCell)((mxGraphComponent)graphCanvas)
-                        .getGraph().getSelectionCell()).getTarget()).getValue();
+            if (((mxCell)graphCanvas.getSelectedCell()).isEdge()) {
+                GraphClassSet edgesource = (GraphClassSet)((mxCell)((mxCell)graphCanvas
+                        .getSelectedCell()).getSource()).getValue();
+                GraphClassSet edgetarget = (GraphClassSet)((mxCell)((mxCell)graphCanvas
+                        .getSelectedCell()).getTarget()).getValue();
                 JDialog d = InclusionResultDialog.newInstance(
                         graphCanvas.getParent(), edgesource.getLabel(),
                         edgetarget.getLabel());
